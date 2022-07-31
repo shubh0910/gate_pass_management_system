@@ -1,0 +1,202 @@
+﻿  #main,#fs{
+            align-content:center;
+            align-items:center;
+            max-width:fit-content;
+            max-height:225px;
+            background-color:aliceblue;
+            text-emphasis-color:mediumseagreen;
+            text-shadow:1px 1px 2px mediumseagreen ;
+            text-transform:uppercase;
+        font-family:Algerian;
+        font-size:larger;
+        font-style:oblique;
+        }
+
+        #main{
+            margin-top:15%;
+             margin-left:auto;
+            margin-right:auto;
+        }
+        #fs{
+            
+            min-block-size:fit-content;
+            height:225px;
+        }
+        #u,#p{
+            color:darkcyan;
+        }
+       
+        #c{
+           
+            
+        }
+        
+
+
+           <div id="main">
+             <fieldset id="fs">
+                 <legend>Login</legend>
+                 <table><tr><td>
+            <asp:Label runat="server" ID="u" Text="Username"></asp:Label></td>
+            <td><asp:TextBox ID="un" TextMode="SingleLine" Text="" runat="server"></asp:TextBox></td></tr>
+           <tr><td colspan="2"> <asp:Label ID="ulbl" runat="server" Text=""></asp:Label></td></tr>
+          <tr> <td> <asp:Label runat="server" ID="p" Text="Password" ></asp:Label><br /></td>
+           <td> <asp:TextBox ID="pw" TextMode="Password" Text="" runat="server"></asp:TextBox></td></tr>
+           <tr><td colspan="2"> <asp:Label ID="plbl" runat="server" Text=""></asp:Label></td></tr>
+            
+         <tr>  <td colspan="2" id="c"> <asp:Button OnClick="transferControl" ID="btn" Text="Click" runat="server" /></td></tr>
+            </table>
+                     </fieldset>
+         </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            DayOfWeek day = DateTime.Now.DayOfWeek;
+        SqlConnection con = new SqlConnection("Data Source=(localdb)\\ProjectModels; Database=gpms; Integrated Security=SSPI");
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!IsPostBack)
+            {                
+                setData();
+            }
+        }
+        protected void changeLabel(object sender, EventArgs e)
+        {
+            Session["reason"] = ddr.SelectedIndex;
+            pl.Text = Session["reason"].ToString();
+        }
+        protected void GeneratePass(object sender, EventArgs e)
+        {
+            if (ddr.SelectedValue == "NA")
+            {
+                pl.Text = "select reason";
+            }
+            if (Request.Cookies["CCG"].Value == "False")
+            {
+                pl.Text = "You are not permitted to create gatepass";
+            }else if (Request.Cookies["CCG"].Value == "True")
+            {
+
+                if (DateTime.Now.Hour > 9 && DateTime.Now.Hour < 16)
+                    {
+                        if (day == DayOfWeek.Saturday && (day == DayOfWeek.Sunday))
+                        {
+                            pl.Text = "Gatepass cannot be created on Weekend";
+                        }
+                        else
+                        {
+                        actualPass();
+                        //    Response.Redirect("./GenerateGatePass.aspx");
+                        }
+                    }
+                    else if (DateTime.Now.Hour < 9)
+                        pl.Text = "Gatepass cannot be created before College hours";
+                    else if (DateTime.Now.Hour > 16)
+                        pl.Text = "Gatepass cannot be created after College hours";
+                }
+            
+        }
+
+        private void setData()
+        {
+            if (Request["Username"] == null )
+            {
+                Response.Redirect("../loginpage.aspx");
+            }
+
+            else if (Request["Username"] != null)
+            {
+                SqlCommand cmd = new SqlCommand("select * from users where id = " + Request.Cookies["Username"].Value.ToString() , con);
+                con.Open();
+                SqlDataReader sdr = cmd.ExecuteReader();
+                if (sdr.HasRows)
+                {
+                    sdr.Read();
+                    Session["sid"] = PRN.Text = sdr["id"].ToString();
+                    Session["fname"] = fname.Text = sdr["fname"].ToString();
+                    Session["mname"] = mname.Text = sdr["mname"].ToString();
+                    Session["sname"] = sname.Text = sdr["sname"].ToString();
+                    createCookie("CCG", sdr["ccg"].ToString());
+                }
+                ddr.SelectedIndex = 0;
+                sdr.Close();
+                con.Close();
+                
+            }
+        }
+        public void createCookie(string name, string value = "", int t = 3)
+        {
+            HttpCookie c = new HttpCookie(name);
+            c.HttpOnly = true;
+            c.Value = value;
+            c.Expires = DateTime.Now.AddDays(t);
+            Response.Cookies.Add(c);
+        }
+        private void actualPass()
+        {
+
+            int ddt = (int)DateTime.Now.Subtract(DateTime.Parse(Request.Cookies["date"].Value)).TotalMinutes;
+            pl.Text = ddt.ToString()+ DateTime.Parse(Request.Cookies["date"].Value);
+            createCookie("date", "");
+            if (Request["date"] == null || ddt > 30)
+            {
+                SqlCommand cmd = new SqlCommand("select max(ctime) from gatepass where sid = " + Request.Cookies["Username"].Value.ToString() , con);
+                con.Open();
+                DateTime dd = DateTime.Parse(cmd.ExecuteScalar().ToString());
+                con.Close();
+                Request.Cookies["date"].Value =dd.ToString();
+            }
+            else if(ddt <= 30)
+            {
+            pl.Text = "you have created pass before " + DateTime.Now.Subtract(DateTime.Parse(Request.Cookies["date"].Value)).ToString();
+            }
+            if (Request.Cookies["date"].Value != null)
+            {
+                SqlCommand cmd = new SqlCommand("select max(ctime) from gatepass where sid = " + Request.Cookies["Username"].Value.ToString() + " group by sid", con);
+                con.Open();
+                SqlDataReader sdr = cmd.ExecuteReader();
+                if (sdr.HasRows)
+                {
+                    sdr.Read();
+                    DateTime dd = DateTime.Parse(sdr[0].ToString());
+                    createCookie("date", dd.ToString());
+                }
+                else
+                {
+                    createCookie("date", DateTime.Now.AddDays(-1).ToString());
+                }
+                sdr.Close();
+                con.Close();
+            }
+            if ( ddt>30)
+            {
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("Insert into gatepass (sid,rid,ctime) values (@sid,@rid,@dt)", con);
+                    cmd.Parameters.AddWithValue("sid", Request.Cookies["Username"].Value.ToString());
+                    cmd.Parameters.AddWithValue("rid", int.Parse(Session["reason"].ToString()));
+                    cmd.Parameters.AddWithValue("dt", DateTime.Now);
+                    con.Open();
+                    int a = cmd.ExecuteNonQuery();
+                    con.Close();
+                    PRN.Text = Session["sid"].ToString();
+                    fname.Text = Session["reason"].ToString();
+                    mname.Text = DateTime.Now.ToString();
+                    pl.Text = "Gatepass created successsully";
+                    Request.Cookies["date"].Value = DateTime.Now.ToString();
+                }
+                catch (Exception ) { }
+            }
+        }

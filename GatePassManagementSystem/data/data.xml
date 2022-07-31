@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<gpms>
+	<reasons>
+		<reason code="NA"></reason>
+		<reason code="Home"></reason>
+		<reason code="Lunch"></reason>
+		<reason code="Sickness"></reason>
+		<reason code="Meeting"></reason>
+		<reason code="stationary"></reason>
+	</reasons>
+	<courses>
+		<course code="Diploma"></course>
+		<course code="Bachelor"></course>
+		<course code="Master"></course>
+		<course code="PHD"></course>
+	</courses>
+	<departments>
+		<department code="Eng. and Tech."></department>
+		<department code="Nursing"></department>
+		<department code="Physiotherapy"></department>
+		<department code="Pharmacy"></department>
+		<department code="MBBS"></department>
+		<department code="Dental"></department>
+	</departments>
+	<times>
+		<time code="NA"></time>
+		<time code="Today" ></time>
+		<time code="Last Week"></time>
+		<time code="Past 1 Month"></time>
+		<time code="Past 3 Months"></time>
+		<time code="Past 6 Months"></time>
+	</times>
+	<branch>
+		<class code="NA"></class>
+		<class code="IT">
+			<sem code="0"></sem>
+			<sem code="1"></sem>
+			<sem code="2"></sem>
+			<sem code="3"></sem>
+			<sem code="4"></sem>
+			<sem code="5"></sem>
+			<sem code="6"></sem>
+			<sem code="7"></sem>
+			<sem code="8"></sem>
+		</class>
+		<class code="CE"></class>
+		<class code="ME"></class>
+		<class code="EE"></class>
+	</branch>
+	<columns>
+		<column code="sid"></column>
+		<column code="fname"></column>
+		<column code="mname"></column>
+		<column code="sname"></column>
+		<column code="branch"></column>
+		<column code="sem"></column>
+		<column code="name"></column>
+		<column code="createdtime"></column>
+		<column code="outtime"></column>
+		<column code="intime"></column>
+	</columns>
+	<orders>
+		<order code="NA"></order>
+		<order code="sem"></order>
+		<order code="sid"></order>
+		<order code="fname"></order>
+		<order code="branch"></order>
+		<order code="sem"></order>
+		<order code="createdtime"></order>
+		<order code="outtime"></order>
+		<order code="intime"></order>
+
+
+
+	</orders>
+</gpms>
