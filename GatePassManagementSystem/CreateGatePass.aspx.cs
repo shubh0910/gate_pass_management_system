@@ -11,10 +11,18 @@ namespace GatePassManagementSystem
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            
+            setBtn();
             if (!IsPostBack)
             {
                 setData();
             }
+        }
+        private void setBtn()
+        {
+            btn.BackColor = System.Drawing.Color.LightBlue;
+            btn.BorderWidth = 5;
+            btn.BorderColor = System.Drawing.Color.FromArgb(1,1,138,189);
         }
         private void setData()
         {
@@ -61,7 +69,7 @@ namespace GatePassManagementSystem
             else if (ddr.SelectedIndex > 0)
             {
                 {
-                    if (DateTime.Now.DayOfWeek == DayOfWeek.Sunday || DateTime.Now.DayOfWeek == DayOfWeek.Sunday)
+                    if (DateTime.Now.DayOfWeek == DayOfWeek.Sunday || DateTime.Now.DayOfWeek == DayOfWeek.Saturday)
                     {
                         pl.Text = "Today is holiday";
                     }
@@ -118,10 +126,11 @@ namespace GatePassManagementSystem
                         {
                             pl.Text = "before college time";
                         }
-                        else if (DateTime.Now.Hour > 16)
+                        else if (DateTime.Now.Hour > 15)
                         {
                             pl.Text = "after college time";
                         }
+
                     }
                 }
             }

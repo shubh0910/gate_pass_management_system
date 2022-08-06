@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <style style=""></style>
+    <script src="Login.js"></script>
+</head>
+<body>
+    <div class="container">
+
+        <h1>Sign In</h1>
+
+        <form runat="server">
+
+            <div class="form-control">
+
+                <input type="text" maxlength="16" min="16" id="prn" required />
+
+                <label>PRN Number</label>
+
+            </div><label id="ulbl" ></label>
+
+            <div class="form-control">
+
+                <input type="password" required/>
+
+                <label>Password</label>
+
+            </div>
+
+            <button class="btn" onclick="doProcess()" type="submit">Submit</button>
+
+            <p class="text">
+                Forget Password?
+
+                <a href="#">Create Account</a>
+            </p>
+
+        </form>
+
+    </div>
+
+</body>
+</html>

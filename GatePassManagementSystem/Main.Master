@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Main.master.cs" Inherits="GatePassManagementSystem.Main" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Main.master.cs" Inherits="GatePassManagementSystem.Main" EnableTheming="true"  %>
 
 <!DOCTYPE html>
 

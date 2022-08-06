@@ -1,0 +1,4 @@
+﻿<asp:TextBox SkinID="sk" BackColor="IndianRed" Font-Size="20px"
+     ForeColor="Snow" runat="server" Text=""></asp:TextBox>
+<asp:Button SkinID="sk1" BackColor="IndianRed" Font-Size="20px"
+     ForeColor="Snow" runat="server" Text=""></asp:Button>

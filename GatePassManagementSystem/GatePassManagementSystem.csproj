@@ -71,7 +71,8 @@
     <Content Include="data\abc.txt" />
     <Content Include="data\data.xml" />
     <Content Include="GenerateGatePass.aspx" />
-    <Content Include="login.aspx" />
+    <Content Include="Login.css" />
+    <Content Include="Login.js" />
     <Content Include="LoginPage.html" />
     <Content Include="temp.html" />
     <Content Include="Web.config" />
@@ -91,13 +92,6 @@
     <Compile Include="GenerateGatePass.aspx.designer.cs">
       <DependentUpon>GenerateGatePass.aspx</DependentUpon>
     </Compile>
-    <Compile Include="login.aspx.cs">
-      <DependentUpon>login.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="login.aspx.designer.cs">
-      <DependentUpon>login.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Main.Master.cs">
       <DependentUpon>Main.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -109,6 +103,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Main.Master" />
+    <Content Include="App_Themes\Skin1\Skin1.skin" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -117,6 +112,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -132,7 +128,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>0</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:49770/</IISUrl>
+          <IISUrl>http://localhost:62244/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
